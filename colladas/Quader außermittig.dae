@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <contributor>
+      <authoring_tool>ema COLLADA exporter</authoring_tool>
+    </contributor>
+    <unit meter="1.0"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_images>
+  </library_images>
+  <library_effects>
+    <effect id="default_0-fx" name="default_0">
+      <profile_COMMON>
+        <technique sid="standard">
+          <phong>
+            <ambient>
+              <color sid="ambient">0.79215688 0.81960785 0.93333334 1.0</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.79215688 0.81960785 0.93333334 1.0</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.4 0.4 0.4 1.0</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">0.01000000</float>
+            </shininess>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="default_0" name="default_0">
+      <instance_effect url="#default_0-fx"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="Quader.jt_0-lib" name="Quader.jt_0-Mesh">
+      <mesh>
+        <source id="Quader.jt_0-POSITION">
+          <float_array id="Quader.jt_0-POSITION-array" count="108">
+5 1 0
+5 1 -1
+5 0 0
+5 0 -1
+5 0 0
+5 1 -1
+6.00000048 1 0
+5 1 0
+6.00000048 0 0
+5 0 0
+6.00000048 0 0
+5 1 0
+6.00000048 1 -1
+6.00000048 1 0
+6.00000048 0 -1
+6.00000048 0 0
+6.00000048 0 -1
+6.00000048 1 0
+5 1 -1
+6.00000048 1 -1
+5 0 -1
+6.00000048 0 -1
+5 0 -1
+6.00000048 1 -1
+6.00000048 1 0
+6.00000048 1 -1
+5 1 0
+5 1 -1
+5 1 0
+6.00000048 1 -1
+6.00000048 0 -1
+6.00000048 0 0
+5 0 -1
+5 0 0
+5 0 -1
+6.00000048 0 0
+          </float_array>
+          <technique_common>
+            <accessor source="#Quader.jt_0-POSITION-array" count="36" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Quader.jt_0-NORMAL">
+          <float_array id="Quader.jt_0-NORMAL-array" count="108">
+-1 0 0
+-1 0 0
+-1 0 0
+-1 0 0
+-1 0 0
+-1 0 0
+0 0 1
+0 0 1
+0 0 1
+0 0 1
+0 0 1
+0 0 1
+1 0 0
+1 0 0
+1 0 0
+1 0 0
+1 0 0
+1 0 0
+0 0 -1
+0 0 -1
+0 0 -1
+0 0 -1
+0 0 -1
+0 0 -1
+0 1 0
+0 1 0
+0 1 0
+0 1 0
+0 1 0
+0 1 0
+0 -1 0
+0 -1 0
+0 -1 0
+0 -1 0
+0 -1 0
+0 -1 0
+          </float_array>
+          <technique_common>
+            <accessor source="#Quader.jt_0-NORMAL-array" count="36" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Quader.jt_0-VERTEX">
+          <input semantic="POSITION" source="#Quader.jt_0-POSITION"/>
+          <input semantic="NORMAL" source="#Quader.jt_0-NORMAL"/>
+        </vertices>
+        <triangles count="12" material="default_0">
+          <input semantic="VERTEX" offset="0" source="#Quader.jt_0-VERTEX"/>
+          <p>1 2 0 4 5 3 7 8 6 10 11 9 13 14 12 16 17 15 19 20 18 22 23 21 25 26 24 28 29 27 31 32 30 34 35 33 </p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="Quader außermittig.dae" name="Quader außermittig.dae">
+    <node name="Quader.jt" id="Quader.jt" sid="Quader.jt">
+      <matrix sid="matrix">1 0 0 0 0 1 0 0 0 0 1 0 0.0 0.0 0.0 1.0</matrix>
+      <instance_geometry url="#Quader.jt_0-lib">
+        <bind_material>
+          <technique_common>
+            <instance_material symbol="default_0" target="#default_0"/>
+          </technique_common>
+        </bind_material>
+      </instance_geometry>
+    </node>
+  </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Quader außermittig.dae"/>
+  </scene>
+</COLLADA>
