@@ -9,19 +9,30 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<link type="text/css" rel="stylesheet" href="main.css">
+		<script type="importmap">
+			{
+				"imports": {
+					"three": "https://cdn.jsdelivr.net/npm/three@<@latest>/build/three.module.js",
+					"three/addons/": "https://cdn.jsdelivr.net/npm/three@<@latest>/examples/jsm/"
+				}
+			}
+		</script>
+		<script type="module" src="https://cdn.jsdelivr.net/npm/three@0.119.0/build/three.module.js"></script>
+		<script type="module" src="https://cdn.jsdelivr.net/npm/three@0.119.0/examples/jsm/loaders/ColladaLoader.js"></script>
+		<link rel="icon" href="favicon.ico">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 	</head>
 	<body>
 
 		<div id="container"></div>
-		<div id="info">
-			<a href="https://github.com/mrdoob/three.js" target="_blank" rel="noopener">3D-Model Web-Viewer</a><br/>
-			by prodwilab <a href="https://github.com/prodwilab" target="_blank" rel="noopener">on GitHub</a>
-		</div>
+		<div id="p-icon"><a href="https://www.b-tu.de/fg-produktionswirtschaft/" target="_blank" rel="noopener"><img src="p-icon.jpg" style="height:33px;width:auto"></a></div>
+		<div id="p-l-icon">PRODWI-LAB<a href="https://github.com/prodwilab" target="_blank" rel="noopener"><img src="pl-icon.png" style="padding-left:5px;height:33px;width:33px"></a></div>
+		
 
 		<script type="module">
 
+			/*import * as THREE from './three119/build/three.module.js';*/
 			import * as THREE from './three119/build/three.module.js';
-
 			import { ColladaLoader } from './three119/examples/jsm/loaders/ColladaLoader.js';
 			
 			var container, clock;
