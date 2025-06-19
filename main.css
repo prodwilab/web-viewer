@@ -29,3 +29,8 @@ body {
     align-items: center;
 	color: #ffffff;
 }
+
+#container {
+    height:100%;
+    width:100%;
+}

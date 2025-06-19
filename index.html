@@ -12,15 +12,11 @@
 		<script type="importmap">
 			{
 				"imports": {
-					"three": "https://cdn.jsdelivr.net/npm/three@<@latest>/build/three.module.js",
-					"three/addons/": "https://cdn.jsdelivr.net/npm/three@<@latest>/examples/jsm/"
+					"three": "https://cdn.jsdelivr.net/npm/three@v0.177.0/build/three.module.js",
+					"three/addons/": "https://cdn.jsdelivr.net/npm/three@v0.177.0/examples/jsm/"
 				}
 			}
 		</script>
-		<script type="module" src="https://cdn.jsdelivr.net/npm/three@0.119.0/build/three.module.js"></script>
-		<script type="module" src="https://cdn.jsdelivr.net/npm/three@0.119.0/examples/jsm/loaders/ColladaLoader.js"></script>
-		<link rel="icon" href="favicon.ico">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 	</head>
 	<body>
 
@@ -31,12 +27,12 @@
 
 		<script type="module">
 
-			/*import * as THREE from './three119/build/three.module.js';*/
-			import * as THREE from './three119/build/three.module.js';
-			import { ColladaLoader } from './three119/examples/jsm/loaders/ColladaLoader.js';
-			
-			var container, clock;
-			var camera, scene, renderer, simplegeometry;
+			import * as THREE from 'three';
+			import { ColladaLoader } from 'three/addons/loaders/ColladaLoader.js';
+			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+			let container, scene, camera, light;
+			let loadingManager, loader, dae, renderer, controls;
 
 			init();
 			animate();
@@ -44,80 +40,88 @@
 			function init() {
 
 				container = document.getElementById( 'container' );
-
-				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 2000 );
-				camera.position.set( 0, 0, 8 );
-				camera.lookAt( 0, 0, 0 );
-
 				scene = new THREE.Scene();
+				camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.1, 1000 );
+				scene.add( camera );
+				light = new THREE.PointLight( 0xffffff, 1 );
+				camera.add( light );	
+				//clock = new THREE.Clock();
 
-				clock = new THREE.Clock();
+				// LOAD-MODEL
+				loadingManager = new THREE.LoadingManager();
+				loader = new ColladaLoader( loadingManager );
 
-				// loading manager
+				loader.load( '/daes/KLT_243-162-129-5.dae', function ( collada ) {
 
-				var loadingManager = new THREE.LoadingManager( function () {
+					dae = collada.scene;
+					
+					centeringAndFitting();
 
-					scene.add( simplegeometry );
+					scene.add( dae )
 
 				} );
 
-				// collada
+				//const gridHelper = new THREE.GridHelper( 10, 20, 0xc1c1c1, 0x8d8d8d );
+				//scene.add( gridHelper );
 
-				var loader = new ColladaLoader( loadingManager );
-				loader.load( 'https://raw.githubusercontent.com/prodwilab/web-viewer/refs/heads/main/models/1.dae', function ( collada ) {
-	
-					simplegeometry = collada.scene;
+				const lights = new THREE.HemisphereLight( 0xfff7f7, 0x494966, 3 );
+				scene.add( lights );
 
-				} );
-
-				//
-
-				var ambientLight = new THREE.AmbientLight( 0xcccccc, 0.4 );
-				scene.add( ambientLight );
-
-				var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.8 );
-				directionalLight.position.set( 1, 1, 0 ).normalize();
-				scene.add( directionalLight );
-
-				//
-
-				renderer = new THREE.WebGLRenderer();
+				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer.setClearColor( 0x000000 );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				container.appendChild( renderer.domElement );
-
-				//
-
+				controls = new OrbitControls( camera, renderer.domElement );
+				controls.addEventListener( 'change', render );
+				controls.autoRotate = true;
+				controls.enableDamping = true;
+				controls.dampingFactor = 0.25;
+				controls.screenSpacePanning = false;
+				controls.minDistance = 0.1;
+				controls.maxDistance = 500
+				controls.maxPolarAngle = Math.PI / 2;
 				window.addEventListener( 'resize', onWindowResize, false );
 
 			}
+
+			function centeringAndFitting() {
+
+				var box = new THREE.Box3();
+				box.setFromObject( dae );
+				dae.position.sub( box.getCenter( new THREE.Vector3() ) );
+				var size = box.getSize(new THREE.Vector3());
+				var maxSize = Math.max(size.x, size.y, size.z);
+				var dist = maxSize * 1.75 / (2 * Math.tan(70 * Math.PI/360));
+				camera.position.set(0,0,size.z / 2 + dist);
+
+			};
 
 			function onWindowResize() {
 
 				camera.aspect = window.innerWidth / window.innerHeight;
 				camera.updateProjectionMatrix();
-
 				renderer.setSize( window.innerWidth, window.innerHeight );
 
 			}
 
 			function animate() {
-
+				
 				requestAnimationFrame( animate );
-
+				controls.update();
 				render();
 
 			}
 
 			function render() {
 
-				var delta = clock.getDelta();
+				//const delta = clock.getDelta();
 
-				if ( simplegeometry !== undefined ) {
+				//if ( dae !== undefined ) {
 
-					simplegeometry.rotation.z += delta * 0.5;
+				//	dae.rotation.z += delta * 0.5;
 
-				}
+				//}
 
 				renderer.render( scene, camera );
 
